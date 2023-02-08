@@ -1,36 +1,37 @@
 import React, { useEffect, useState } from "react";
-import { fetchPeople } from "../fetch-utils";
+import { fetchPeopleById } from "../fetch-utils";
 import "../App.css";
 
 export default function Card() {
   const [people, setPeople] = useState([]);
 
   async function getPeople() {
-    const data = await fetchPeople();
+    const data = await fetchPeopleById();
 
-    const newPeopleArray = data.map((person) => ({
-      id: Math.ceil(Math.random() * 10000000),
-      name: person.name,
-    }));
-
-    setPeople(newPeopleArray);
-    console.log(people);
+    setPeople(data);
+    console.log(data);
   }
 
   useEffect(() => {
     getPeople();
   }, []);
 
-  //   useEffect(() => {
-  //     const data = new URLSearchParams(window.location.search);
+  useEffect(() => {
+    async function getPeopleById() {
+      const data = new URLSearchParams(window.location.search);
 
-  //     const id = data.get("id");
-  //   }, []);
+      const id = data.get("id");
+      console.log("id", id);
+      const response = await fetchPeopleById();
+      console.log("more id", response);
+    }
+    getPeopleById();
+  }, []);
 
   return (
     <div className="card-container">
       {people.map((person) => (
-        <a href="/detail" key={person.id} className="person-card">
+        <a href={`/?id=${person.id}`} key={person.id} className="person-card">
           <h3>{person.name}</h3>
           {/* <p>Birthday: {person.birth_year}</p>
           <p>
