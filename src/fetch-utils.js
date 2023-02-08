@@ -1,11 +1,10 @@
-async function fetchPeople() {
+export async function fetchPeople() {
   const response = await fetch("https://swapi.dev/api/people/");
   const data = await response.json();
-  //   console.log(data.results);
   return data.results;
 }
 
-export async function fetchPeopleById() {
+export async function fetchAllPeopleAndAddId() {
   const data = await fetchPeople();
 
   const newPeopleArray = data.map((person) => ({
@@ -15,4 +14,11 @@ export async function fetchPeopleById() {
 
   console.log(newPeopleArray);
   return newPeopleArray;
+}
+
+export async function fetchPeopleByName(name) {
+  const response = await fetch(`https://swapi.dev/api/people/?search=${name}`);
+
+  const data = response.json();
+  return data;
 }
