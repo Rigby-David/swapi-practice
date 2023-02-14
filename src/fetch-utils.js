@@ -22,3 +22,10 @@ export async function fetchPeopleByName(name) {
   const data = response.json();
   return data;
 }
+
+export async function fetchPlanet(world) {
+  const response = await fetch(`${world}`);
+
+  const data = await response.json();
+  return data;
+}
